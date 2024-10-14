@@ -1,0 +1,53 @@
+<div class="mb-4 text-2xl font-bold text-slate-700">Mi Cuenta</div>
+
+<form [formGroup]="userForm" (ngSubmit)="saveUser()"
+  class="flex flex-col p-8 space-y-4 bg-white border rounded-lg">
+
+  <div class="flex flex-col">
+    <mat-label class="mb-1 font-medium text-slate-500">Usuario</mat-label>
+    <mat-form-field subscriptSizing="dynamic">
+      <input matInput id="username" name="username" formControlName="username" />
+      <mat-error *ngIf="userForm.get('username').hasError('minlength')">
+        Mínimo 3 caracteres
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="flex flex-col">
+    <mat-label class="mb-1 font-medium text-slate-500">Correo</mat-label>
+    <mat-form-field subscriptSizing="dynamic">
+      <input matInput id="email" name="email" formControlName="email" />
+
+      <mat-error *ngIf="userForm.get('email').hasError('email')">
+        Correo inválido
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="flex space-x-2">
+    <div class="flex flex-col flex-auto">
+      <mat-label class="mb-1 font-medium text-slate-500">Nombres</mat-label>
+      <mat-form-field subscriptSizing="dynamic">
+        <input matInput id="first_name" name="first_name" formControlName="first_name" />
+      </mat-form-field>
+    </div>
+    <div class="flex flex-col flex-auto">
+      <mat-label class="mb-1 font-medium text-slate-500">Apellidos</mat-label>
+      <mat-form-field subscriptSizing="dynamic">
+        <input matInput id="last_name" name="last_name" formControlName="last_name" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-radio-group class="flex flex-row" color="primary" id="is_active" name="is_active" formControlName="is_active">
+    <mat-radio-button [value]="true"> Activo </mat-radio-button>
+    <mat-radio-button [value]="false"> Inactivo </mat-radio-button>
+  </mat-radio-group>
+
+  <div class="flex justify-end">
+    <button mat-flat-button color="primary" type="submit" [disabled]="!userForm.valid">
+      <mat-icon [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+      <span>Guardar</span>
+    </button>
+  </div>
+</form>

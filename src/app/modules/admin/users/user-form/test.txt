@@ -1,0 +1,413 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent"
+    >
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <!-- <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500"
+                        >User Interface</a
+                    >
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_mini:chevron-right'"
+                    ></mat-icon>
+                    <a class="ml-1 text-primary-500">Forms</a>
+                </div>
+            </div> -->
+            <!-- Title -->
+            <div class="mt-2">
+                <h2
+                    class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate"
+                >
+                    Nuevo Solicitante
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="max-w-3xl">
+            <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+                <div
+                    class="flex flex-col flex-auto mt-8 bg-card shadow rounded overflow-hidden"
+                >
+                    <div class="p-8 bg-gray-50 dark:bg-gray-700">
+                        <p class="text-lg font-medium">Información Personal</p>
+                        <!-- <p class="text-secondary">
+                            People here will get to know you with this
+                            information
+                        </p> -->
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="p-8 pb-4">
+                        <!-- Avatar -->
+                        <div class="flex flex-col items-center">
+                            <div
+                                class="relative flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card"
+                            >
+                                <!-- Upload / Remove avatar -->
+                                <div
+                                    class="absolute inset-0 bg-black bg-opacity-50 z-10"
+                                ></div>
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center z-20"
+                                >
+                                    <div>
+                                        <input
+                                            id="avatar"
+                                            name="avatar"
+                                            class="absolute h-0 w-0 opacity-0 invisible pointer-events-none"
+                                            type="file"
+                                            [multiple]="false"
+                                            [accept]="'image/jpeg, image/png'"
+                                            (change)="
+                                                uploadImage(
+                                                    imageFileInput.files
+                                                )
+                                            "
+                                            #imageFileInput
+                                        />
+                                        <label
+                                            class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+                                            for="avatar"
+                                            matRipple
+                                        >
+                                            <mat-icon
+                                                class="text-white"
+                                                [svgIcon]="
+                                                    'heroicons_outline:camera'
+                                                "
+                                            ></mat-icon>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <button
+                                            mat-icon-button
+                                            (click)="removeImage()"
+                                        >
+                                            <mat-icon
+                                                class="text-white"
+                                                [svgIcon]="
+                                                    'heroicons_outline:trash'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- Image/Letter -->
+                                <img
+                                    alt="avatar"
+                                    class="object-cover w-full h-full"
+                                    *ngIf="avatarPreview"
+                                    [src]="avatarPreview"
+                                />
+                                <div
+                                    class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                                    *ngIf="!avatarPreview"
+                                >
+                                    N
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- name field -->
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <span
+                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Nombres</span
+                            >
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <input matInput />
+                            </mat-form-field>
+                        </div>
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <span
+                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Apellidos</span
+                            >
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <input matInput />
+                            </mat-form-field>
+                        </div>
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>Fecha Nacimiento</mat-label>
+                                <input
+                                    matInput
+                                    [matDatepicker]="picker1"
+                                    id="birthday"
+                                    name="birthday"
+                                    [formControlName]="'birthday'"
+                                />
+                                <mat-datepicker-toggle
+                                    matSuffix
+                                    [for]="picker1"
+                                ></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                            <ng-container
+                                *ngFor="let err of errors['birthday']"
+                            >
+                                <mat-error>
+                                    {{ err }}
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <span
+                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Tipo de Identificación</span
+                            >
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <mat-select
+                                    id="identification_type"
+                                    name="identification_type"
+                                    formControlName="identification_type"
+                                >
+                                    <mat-option value="dni">Cedula</mat-option>
+                                    <mat-option value="passport"
+                                        >Pasaporte</mat-option
+                                    >
+                                </mat-select>
+                                <mat-error
+                                    *ngFor="
+                                        let err of errors['identification_type']
+                                    "
+                                >
+                                    {{ err }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <span
+                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Identificación</span
+                            >
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <input
+                                    matInput
+                                    id="identification"
+                                    name="identification"
+                                    formControlName="identification"
+                                />
+                                <ng-container
+                                    *ngFor="let err of errors['identification']"
+                                >
+                                    <mat-error>
+                                        {{ err }}
+                                    </mat-error>
+                                </ng-container>
+                            </mat-form-field>
+                        </div>
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <span
+                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Pais</span
+                            >
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <mat-select
+                                    id="country"
+                                    name="country"
+                                    formControlName="country"
+                                >
+                                    <mat-option
+                                        *ngFor="let country of countries"
+                                        [value]="country.id"
+                                        >{{ country.name }}</mat-option
+                                    >
+                                </mat-select>
+                                <mat-error
+                                    *ngFor="let err of errors['country']"
+                                >
+                                    {{ err }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <span
+                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Departamento</span
+                            >
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <mat-select
+                                    id="department"
+                                    name="department"
+                                    formControlName="department"
+                                >
+                                    <mat-option
+                                        *ngFor="let dep of departments"
+                                        [value]="dep.id"
+                                        >{{ dep.name }}</mat-option
+                                    >
+                                </mat-select>
+                                <mat-error
+                                    *ngFor="let err of errors['department']"
+                                >
+                                    {{ err }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-col flex-auto mt-8 bg-card shadow rounded overflow-hidden"
+                >
+                    <div class="p-8 bg-gray-50 dark:bg-gray-700">
+                        <p class="text-lg font-medium">Empresa</p>
+                        <!-- <p class="text-secondary">
+                            People here will get to know you with this
+                            information
+                        </p> -->
+                    </div>
+
+                    <mat-divider></mat-divider>
+                    <div class="p-8 pb-4">
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <span
+                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Sitio</span
+                            >
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <mat-select
+                                    id="site"
+                                    name="site"
+                                    formControlName="site"
+                                >
+                                    <mat-option
+                                        *ngFor="let site of sites"
+                                        [value]="site.id"
+                                        >{{ site.name }}</mat-option
+                                    >
+                                </mat-select>
+                                <mat-error *ngFor="let err of errors['site']">
+                                    {{ err }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <span
+                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Empresa</span
+                            >
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <input
+                                    matInput
+                                    id="company"
+                                    name="company"
+                                    formControlName="company"
+                                />
+                                <mat-error
+                                    *ngFor="let err of errors['company']"
+                                >
+                                    {{ err }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-col mt-8 bg-card shadow rounded overflow-hidden"
+                >
+                    <div class="p-8 bg-gray-50 dark:bg-gray-700">
+                        <p class="text-lg font-medium">Cuenta</p>
+                        <!-- <p class="text-secondary">
+                            Set your login preferences, help us personalize your
+                            experience and make big account changes here
+                        </p> -->
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="p-8 pb-4">
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <span
+                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Usuario</span
+                            >
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <input matInput />
+                            </mat-form-field>
+                        </div>
+                        <div
+                            class="flex flex-col gt-xs:flex-row gt-xs:items-baseline"
+                        >
+                            <span
+                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Correo</span
+                            >
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <input matInput />
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col gt-xs:flex-row">
+                            <span
+                                class="font-semibold mb-2 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0"
+                                >Estado</span
+                            >
+                            <mat-radio-group
+                                class="flex flex-col"
+                                [color]="'primary'"
+                                [value]="'just-good'"
+                            >
+                                <mat-radio-button
+                                    class="mb-2"
+                                    [value]="'everything'"
+                                >
+                                    Activo
+                                </mat-radio-button>
+                                <mat-radio-button
+                                    class="mb-2"
+                                    [value]="'just-good'"
+                                >
+                                    Inactivo
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end mt-10">
+                    <button
+                        class="px-6 ml-3"
+                        mat-flat-button
+                        [color]="'primary'"
+                        type="submit"
+                        [disabled]="!userForm.valid"
+                    >
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

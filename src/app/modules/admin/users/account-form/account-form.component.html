@@ -1,0 +1,68 @@
+<form
+    [formGroup]="userForm"
+    (ngSubmit)="saveUser()"
+    class="flex flex-col p-8 pb-4 mt-8 overflow-hidden shadow bg-card rounded-2xl"
+>
+    <div class="flex">
+        <mat-form-field class="flex-auto">
+            <mat-label>Nombres</mat-label>
+            <input
+                matInput
+                id="first_name"
+                name="first_name"
+                formControlName="first_name"
+            />
+        </mat-form-field>
+        <mat-form-field class="flex-auto ml-2">
+            <mat-label>Apellidos</mat-label>
+            <input
+                matInput
+                id="last_name"
+                name="last_name"
+                formControlName="last_name"
+            />
+        </mat-form-field>
+    </div>
+
+    <mat-form-field>
+        <mat-label>Usuario</mat-label>
+        <input
+            matInput
+            id="username"
+            name="username"
+            formControlName="username"
+        />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Correo</mat-label>
+        <input matInput id="email" name="email" formControlName="email" />
+    </mat-form-field>
+
+    <mat-radio-group
+        class="flex flex-col"
+        [color]="'primary'"
+        id="is_active"
+        name="is_active"
+        formControlName="is_active"
+    >
+        <mat-radio-button class="mb-2" [value]="true">
+            Activo
+        </mat-radio-button>
+        <mat-radio-button class="mb-2" [value]="false">
+            Inactivo
+        </mat-radio-button>
+    </mat-radio-group>
+
+    <div class="flex items-center justify-end mt-10">
+        <button
+            class="px-6 ml-3"
+            mat-flat-button
+            [color]="'primary'"
+            type="submit"
+            [disabled]="!userForm.valid"
+        >
+            Guardar
+        </button>
+    </div>
+</form>

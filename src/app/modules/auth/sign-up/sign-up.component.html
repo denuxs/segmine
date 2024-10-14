@@ -1,0 +1,148 @@
+<div class="flex flex-col flex-auto p-10 bg-white shadow rounded-2xl">
+  <div class="w-full mx-auto max-w-80">
+    <!-- <div class="w-40">
+      <img src="assets/logo.jpeg" />
+    </div> -->
+
+    <div
+      class="mt-8 text-4xl font-extrabold leading-tight tracking-tight text-slate-700"
+    >
+      Registrarse
+    </div>
+    <div class="flex items-baseline mt-0.5">
+      <div>¿Ya tienes una cuenta?</div>
+      <a class="ml-1 text-sky-500 hover:underline" routerLink="/auth/login"
+        >Iniciar sesión
+      </a>
+    </div>
+
+    <form
+      class="flex flex-col flex-auto mt-8 space-y-4"
+      [formGroup]="signUpForm"
+      (ngSubmit)="signUp()"
+    >
+      <div class="grid w-full grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-2">
+        <div class="flex flex-col">
+          <mat-label class="mb-1 font-medium text-slate-500">Nombres</mat-label>
+          <mat-form-field subscriptSizing="dynamic">
+            <input
+              matInput
+              type="text"
+              id="first_name"
+              name="first_name"
+              formControlName="first_name"
+            />
+          </mat-form-field>
+          <mat-error *ngFor="let err of errors['first_name']">
+            {{ err }}
+          </mat-error>
+        </div>
+        <div class="flex flex-col">
+          <mat-label class="mb-1 font-medium text-slate-500"
+            >Apellidos</mat-label
+          >
+          <mat-form-field subscriptSizing="dynamic">
+            <input
+              matInput
+              type="text"
+              id="last_name"
+              name="last_name"
+              formControlName="last_name"
+            />
+          </mat-form-field>
+          <mat-error *ngFor="let err of errors['last_name']">
+            {{ err }}
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="flex flex-col">
+        <mat-label class="mb-1 font-medium text-slate-500">Usuario</mat-label>
+        <mat-form-field subscriptSizing="dynamic">
+          <input
+            matInput
+            type="text"
+            id="username"
+            name="username"
+            formControlName="username"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="signUpForm.get('username').hasError('minlength')">
+          Mínimo 3 caracteres
+        </mat-error>
+        <mat-error *ngFor="let err of errors['username']">
+          {{ err }}
+        </mat-error>
+      </div>
+
+      <div class="flex flex-col">
+        <mat-label class="mb-1 font-medium text-slate-500">Correo</mat-label>
+        <mat-form-field subscriptSizing="dynamic">
+          <input
+            matInput
+            type="text"
+            id="email"
+            name="email"
+            formControlName="email"
+          />
+          <mat-error *ngIf="signUpForm.get('email').hasError('email')">
+            Correo inválido
+          </mat-error>
+        </mat-form-field>
+        <mat-error *ngFor="let err of errors['email']">
+          {{ err }}
+        </mat-error>
+      </div>
+
+      <div class="flex flex-col">
+        <mat-label class="mb-1 font-medium text-slate-500"
+          >Contraseña</mat-label
+        >
+        <mat-form-field subscriptSizing="dynamic">
+          <input
+            matInput
+            type="password"
+            id="password"
+            name="password"
+            formControlName="password"
+            #passwordField
+          />
+          <button
+            mat-icon-button
+            type="button"
+            (click)="
+              passwordField.type === 'password'
+                ? (passwordField.type = 'text')
+                : (passwordField.type = 'password')
+            "
+            matSuffix
+          >
+            <mat-icon
+              *ngIf="passwordField.type === 'password'"
+              [svgIcon]="'heroicons_solid:eye'"
+            ></mat-icon>
+            <mat-icon
+              *ngIf="passwordField.type === 'text'"
+              [svgIcon]="'heroicons_solid:eye-slash'"
+            ></mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-error *ngIf="signUpForm.get('password').hasError('minlength')">
+          Mínimo 6 caracteres
+        </mat-error>
+        <mat-error *ngFor="let err of errors['password']">
+          {{ err }}
+        </mat-error>
+      </div>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="!signUpForm.valid"
+      >
+        Crear cuenta
+      </button>
+    </form>
+  </div>
+</div>

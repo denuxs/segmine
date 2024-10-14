@@ -1,0 +1,130 @@
+<form [formGroup]="studentForm" (ngSubmit)="saveUser()"
+    class="flex flex-col p-8 pb-4 mt-8 overflow-hidden shadow bg-card rounded-2xl">
+    <!-- Avatar -->
+    <div class="flex flex-col items-center">
+        <div
+            class="relative flex items-center justify-center w-32 h-32 overflow-hidden rounded-full ring-4 ring-bg-card">
+            <!-- Upload / Remove avatar -->
+            <div class="absolute inset-0 z-10 bg-black bg-opacity-50"></div>
+            <div class="absolute inset-0 z-20 flex items-center justify-center">
+                <div>
+                    <input id="avatar" name="avatar" class="absolute invisible w-0 h-0 opacity-0 pointer-events-none"
+                        type="file" [multiple]="false" [accept]="'image/jpeg, image/png'"
+                        (change)="uploadImage(imageFileInput.files)" #imageFileInput />
+                    <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+                        for="avatar" matRipple>
+                        <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+                    </label>
+                </div>
+                <div>
+                    <button mat-icon-button (click)="removeImage()">
+                        <mat-icon class="text-white" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                    </button>
+                </div>
+            </div>
+            <!-- Image/Letter -->
+            <img alt="avatar" class="object-cover w-full h-full" *ngIf="avatarPreview" [src]="avatarPreview" />
+            <div class="flex items-center justify-center w-full h-full overflow-hidden font-bold leading-none text-gray-600 uppercase bg-gray-200 rounded text-8xl dark:bg-gray-700 dark:text-gray-200"
+                *ngIf="!avatarPreview">
+                N
+            </div>
+        </div>
+    </div>
+
+    <div class="flex">
+        <mat-form-field class="flex-auto">
+            <mat-label>Nombres</mat-label>
+            <input matInput id="first_name" name="first_name" />
+        </mat-form-field>
+        <mat-form-field class="flex-auto ml-2">
+            <mat-label>Apellidos</mat-label>
+            <input matInput id="last_name" name="last_name" />
+        </mat-form-field>
+    </div>
+
+    <div class="flex space-x-2">
+        <mat-form-field class="flex-auto">
+            <mat-label>Fecha Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker1" id="birthday" name="birthday" [formControlName]="'birthday'" />
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <ng-container *ngFor="let err of errors['birthday']">
+            <mat-error>
+                {{ err }}
+            </mat-error>
+        </ng-container>
+
+        <mat-form-field class="flex-auto">
+            <mat-label>Pais</mat-label>
+            <mat-select id="country" name="country" formControlName="country">
+                <mat-option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</mat-option>
+            </mat-select>
+            <mat-error *ngFor="let err of errors['country']">
+                {{ err }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="flex-auto">
+            <mat-label>Departamento</mat-label>
+            <mat-select id="department" name="department" formControlName="department">
+                <mat-option *ngFor="let dep of departments" [value]="dep.id">{{
+                    dep.name
+                    }}</mat-option>
+            </mat-select>
+            <mat-error *ngFor="let err of errors['department']">
+                {{ err }}
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="flex space-x-2">
+        <mat-form-field class="flex-auto">
+            <mat-label> Tipo Identificacion</mat-label>
+            <mat-select id="identification_type" name="identification_type" formControlName="identification_type">
+                <mat-option value="dni">Cedula</mat-option>
+                <mat-option value="passport">Pasaporte</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="flex-auto">
+            <mat-label>Identificacion</mat-label>
+            <input matInput id="identification" name="identification" formControlName="identification" />
+            <ng-container *ngFor="let err of errors['identification']">
+                <mat-error>
+                    {{ err }}
+                </mat-error>
+            </ng-container>
+        </mat-form-field>
+    </div>
+
+
+
+    <div class="flex space-x-2">
+        <mat-form-field class="flex-auto">
+            <mat-label>Sitio</mat-label>
+            <mat-select id="site" name="site" formControlName="site">
+                <mat-option *ngFor="let site of sites" [value]="site.id">{{
+                    site.name
+                    }}</mat-option>
+            </mat-select>
+            <mat-error *ngFor="let err of errors['site']">
+                {{ err }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="flex-auto">
+            <mat-label>Empresa</mat-label>
+            <input matInput id="company" name="company" formControlName="company" />
+            <mat-error *ngFor="let err of errors['company']">
+                {{ err }}
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="flex items-center justify-end mt-10">
+        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" type="submit" [disabled]="!studentForm.valid">
+            Guardar
+        </button>
+    </div>
+</form>

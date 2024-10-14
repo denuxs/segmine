@@ -1,0 +1,60 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div
+        class="flex flex-col p-6 border-b sm:flex-row flex-0 sm:items-center sm:justify-between sm:py-8 sm:px-10 bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Title -->
+            <div class="mt-2">
+                <h2 class="text-3xl font-extrabold leading-7 tracking-tight truncate md:text-4xl sm:leading-10">
+                    Vista Previa
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10" *ngIf="survey">
+        <div class="max-w-3xl">
+            <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+                <div class="flex flex-col p-8 pb-4 mt-8 overflow-hidden shadow bg-card rounded-2xl">
+                    <div class="mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl">
+                        {{ survey.title }}
+                    </div>
+                    <div class="mt-2 text-xl text-secondary">
+                        {{ survey.description }}
+                    </div>
+                </div>
+
+                <ng-container *ngFor="let control of formStructure">
+                    <div class="flex flex-col p-8 pb-4 mt-8 overflow-hidden shadow bg-card rounded-2xl">
+                        <span class="mb-2 font-semibold">
+                            {{ control.label }}
+                        </span>
+                        <ng-container *ngFor="let option of control.options">
+                            <div class="flex flex-col" *ngIf="['radio'].includes(control.type)">
+                                <mat-radio-group class="flex flex-col" [color]="'primary'"
+                                    [formControlName]="control.name">
+                                    <mat-radio-button class="mb-2" [value]="option.value">
+                                        {{ option.label }}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+
+                            <div class="flex flex-col" *ngIf="['checkbox'].includes(control.type)">
+                                <mat-checkbox class="mb-2" [color]="'primary'" (change)="handleCheckbox()" [formControlName]="control.name" [value]="option.value">
+                                    {{ option.label }}
+                                </mat-checkbox>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+                <div class="flex items-center justify-end mt-10">
+                    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" type="submit"
+                        [disabled]="!dynamicForm.valid">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

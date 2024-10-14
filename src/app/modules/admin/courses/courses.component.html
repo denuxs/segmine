@@ -1,0 +1,9 @@
+<div class="flex justify-between mb-4">
+  <div class="text-2xl font-medium">Cursos</div>
+  <button mat-flat-button color="primary" routerLink="/admin/courses/form">
+    <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+    <span>Nuevo Curso</span>
+  </button>
+</div>
+
+<app-fuse-table [cols]="columns" [data]="dataSource" (onDeleteRow)="handleDeleteRow($event)"></app-fuse-table>

@@ -1,0 +1,92 @@
+<div class="flex justify-between mb-4">
+  <div class="text-2xl font-bold text-slate-700">Sitio</div>
+
+  <button mat-stroked-button color="primary" routerLink="/admin/sites">
+    <mat-icon [svgIcon]="'heroicons_solid:arrow-left'"></mat-icon>
+    <span>Regresar</span>
+  </button>
+</div>
+
+<form [formGroup]="siteForm" (ngSubmit)="saveSite()">
+  <div class="flex flex-col p-8 space-y-4 bg-white border rounded-lg">
+
+    <div class="flex flex-col">
+      <mat-label class="mb-1 font-medium text-slate-500">Nombre</mat-label>
+      <mat-form-field class="w-full" subscriptSizing="dynamic">
+        <input matInput id="name" name="name" formControlName="name" />
+
+        <mat-error *ngFor="let err of errors['name']">
+          {{ err }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex space-x-2">
+      <div class="flex flex-col flex-auto">
+        <mat-label class="mb-1 font-medium text-slate-500">Pais</mat-label>
+        <mat-form-field class="flex-auto" subscriptSizing="dynamic">
+          <mat-select formControlName="country" id="country" name="country">
+            <mat-option *ngFor="let country of countries" [value]="country.id">{{
+              country.name
+              }}</mat-option>
+          </mat-select>
+          <mat-error *ngFor="let err of errors['country']">
+            {{ err }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="flex flex-col flex-auto">
+        <mat-label class="mb-1 font-medium text-slate-500">Departamento</mat-label>
+        <mat-form-field class="flex-auto" subscriptSizing="dynamic">
+          <mat-select formControlName="department" id="department" name="department">
+            <mat-option *ngFor="let dep of departments" [value]="dep.id">{{
+              dep.name
+              }}</mat-option>
+          </mat-select>
+          <mat-error *ngFor="let err of errors['department']">
+            {{ err }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mt-8 text-2xl font-bold text-slate-700">Cursos</div>
+
+  <div class="p-4 mt-4 bg-white border rounded-lg" *ngFor="
+      let course of siteForm.get('courses')['controls'];
+      let i = index;
+      trackBy: trackByFn
+    ">
+    <div class="flex">
+      <mat-form-field class="flex-auto" subscriptSizing="dynamic">
+
+        <mat-select [formControl]="course.get('id')">
+          <mat-option *ngFor="let course of courses" [value]="course.id">{{
+            course.title
+            }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="flex items-center w-20 pl-2">
+        <button mat-icon-button color="warn" (click)="removeCourseField(i)" matTooltip="Borrar">
+          <mat-icon [svgIcon]="'heroicons_solid:trash'"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <a mat-flat-button class="mt-4" color="accent" (click)="addCourseField()">
+    <mat-icon [svgIcon]="'heroicons_solid:plus-circle'"></mat-icon>
+    <span>Agregar Curso</span>
+  </a>
+
+  <div class="flex items-center justify-end mt-10">
+    <button mat-flat-button color="primary" type="submit" [disabled]="!siteForm.valid">
+      <mat-icon [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+      <span>Guardar</span>
+    </button>
+  </div>
+</form>

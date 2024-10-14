@@ -1,0 +1,39 @@
+<div class="flex flex-col">
+  <div class="flex items-center h-16 px-10 bg-white shadow flex-0">
+    <div class="m-0 text-2xl font-bold text-slate-700">Mi Application</div>
+
+    <div class="flex ml-auto items-centers">
+      <a
+        mat-button
+        [routerLink]="['/settings/', userId]"
+        class="bg-white hover:underline"
+        >Mi Cuenta</a
+      >
+      <a mat-button class="hover:underline" (click)="signOut()"
+        >Cerrar Sesión</a
+      >
+    </div>
+  </div>
+
+  <div class="flex flex-row p-10">
+    <div class="w-1/5">
+      <ul class="space-y-2">
+        <ng-container *ngFor="let item of navigation; trackBy: trackByFn">
+          <li>
+            <a mat-button [routerLink]="item.link">
+              <mat-icon [svgIcon]="item.icon"></mat-icon>
+              <span>{{ item.title }}</span>
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="w-4/5">
+      <router-outlet />
+    </div>
+  </div>
+
+  <!-- <div class="flex">
+    footer
+  </div> -->
+</div>

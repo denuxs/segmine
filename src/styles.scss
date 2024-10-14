@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'sass:map';
+@use "@angular/material" as mat;
+@include mat.core();
+
+$my-primary: mat.define-palette(mat.$blue-palette);
+$my-accent: mat.define-palette(mat.$teal-palette);
+$my-warn: mat.define-palette(mat.$red-palette);
+
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn
+    ),
+    // typography: mat.define-typography-config(),
+    // density: 0,
+  )
+);
+
+@include mat.all-component-themes($my-theme);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f9f9f9;
+}
+
+.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field
+  .mdc-notched-outline__notch {
+  border-right-style: hidden;
+}

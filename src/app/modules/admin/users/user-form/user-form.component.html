@@ -1,0 +1,109 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div
+        class="flex flex-col p-6 border-b sm:flex-row flex-0 sm:items-center sm:justify-between sm:py-8 sm:px-10 bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <!-- <div>
+                <div class="flex-wrap items-center hidden font-medium sm:flex">
+                    <div>
+                        <a class="whitespace-nowrap text-primary-500">Projects</a>
+                    </div>
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_mini:chevron-right'"></mat-icon>
+                        <a class="ml-1 text-primary-500">Weekend Project</a>
+                    </div>
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_mini:chevron-right'"></mat-icon>
+                        <span class="ml-1 text-secondary">Overview</span>
+                    </div>
+                </div>
+                <div class="flex sm:hidden">
+                    <a
+                        class="inline-flex items-center -ml-1.5 text-secondary font-medium"
+                        [routerLink]="'./..'">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-left'"></mat-icon>
+                        <span class="ml-1">Back</span>
+                    </a>
+                </div>
+            </div> -->
+            <!-- Title -->
+            <div class="mt-2">
+                <h2 class="text-3xl font-extrabold leading-7 tracking-tight truncate md:text-4xl sm:leading-10">
+                    Usuario
+                </h2>
+            </div>
+        </div>
+        <!-- Actions -->
+        <!-- <div class="flex items-center mt-6 shrink-0 sm:mt-0 sm:ml-4">
+            <button mat-stroked-button>
+                <mat-icon
+                    class="icon-size-4"
+                    [svgIcon]="'heroicons_mini:pencil-square'"></mat-icon>
+                <span class="ml-2">Edit</span>
+            </button>
+            <button
+                class="ml-3"
+                mat-flat-button
+                [color]="'accent'">
+                <mat-icon
+                    class="icon-size-4"
+                    [svgIcon]="'heroicons_mini:link'"></mat-icon>
+                <span class="ml-2">View</span>
+            </button>
+        </div> -->
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto pt-6 sm:px-4 sm:pb-4">
+        <div class="max-w-3xl">
+            <form [formGroup]="userForm" (ngSubmit)="saveUser()"
+                class="flex flex-col p-8 pb-4 mt-8 overflow-hidden shadow bg-card rounded-2xl">
+                <div class="flex">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Nombres</mat-label>
+                        <input matInput id="first_name" name="first_name" formControlName="first_name" />
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto ml-2">
+                        <mat-label>Apellidos</mat-label>
+                        <input matInput id="last_name" name="last_name" formControlName="last_name" />
+                    </mat-form-field>
+                </div>
+                <mat-form-field>
+                    <mat-label>Correo</mat-label>
+                    <input matInput id="email" name="email" formControlName="email" />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Usuario</mat-label>
+                    <input matInput id="username" name="username" formControlName="username" />
+                </mat-form-field>
+
+                <mat-radio-group class="flex flex-col" [color]="'primary'" id="is_active" name="is_active"
+                    formControlName="is_active">
+                    <mat-radio-button class="mb-2" [value]="true">
+                        Activo
+                    </mat-radio-button>
+                    <mat-radio-button class="mb-2" [value]="false">
+                        Inactivo
+                    </mat-radio-button>
+                </mat-radio-group>
+
+                <div class="flex items-center justify-end mt-10">
+                    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" type="submit"
+                        [disabled]="!userForm.valid">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
